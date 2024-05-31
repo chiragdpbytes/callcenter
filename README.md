@@ -9,12 +9,19 @@ Frontend Run:
 
 Project Dependencies:
 > yarn add twilio express body-parser socket.io
+
 > yarn add nodemon
+
 > yarn add twilio-client axios semantic-ui-react semantic-ui-css
+
 > yarn add immer use-immer
+
 > yarn add socket.io-client
+
 > npm install cors
+
 > yarn add jsonwebtoken
+
 > yarn add twilio-client
 
 Install LocalTunnel:
