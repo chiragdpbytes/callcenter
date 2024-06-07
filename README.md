@@ -1,31 +1,73 @@
 # callcenter
+
 Twilio Callcenter
 
 Backend Run:
+
 > yarn start:dev
 
 Frontend Run:
+
 > yarn start
 
 Project Dependencies:
+
+Backend: http://localhost:3002/
+
+Yarn Run:
+
+> yarn init -y
+
+Install dependencies:
+
 > yarn add twilio express body-parser socket.io
 
 > yarn add nodemon
 
-> yarn add twilio-client axios semantic-ui-react semantic-ui-css
+Update package.json file and add scripts
 
-> yarn add immer use-immer
+Update package.json file and add nodemonConfig
 
-> yarn add socket.io-client
+fix cors error in local
 
-> npm install cors
+> yarn add cors
+
+add jwt
 
 > yarn add jsonwebtoken
 
-> yarn add twilio-client
+Start the server:
 
-Install LocalTunnel:
+> yarn start:dev
+
+Frontend: http://localhost:3000/
+Create react app
+
+> npx create-react-app frontend
+
+> yarn add twilio-client axios semantic-ui-react semantic-ui-css
+
+create login form using semantic-ui
+
+add useImmer state
+
+> yarn add immer use-immer
+
+add socket.io-client
+
+> yarn add socket.io-client
+> npm install util
+> touch webpack.config.js
+> npm install --save-dev webpack webpack-cli babel-loader util
+
+Start react app
+
+> yarn start
+
+Install LocalTunnel globally:
+
 > npm install -g localtunnel
 
-LocalTunnel Connect:
-> lt --port 3001 --subdomain chirag-callcenter
+LocalTunnel Connect with subdomain:
+
+> lt --port 3002 --subdomain trady-callcenter
