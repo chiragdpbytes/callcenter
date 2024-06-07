@@ -52,7 +52,7 @@ class Twilio {
       },
       message
     );
-    twiml.redirect("https://chirag-callcenter.loca.lt/enqueue");
+    twiml.redirect("https://trady-callcenter.loca.lt/enqueue");
     return twiml;
   }
 
@@ -69,17 +69,24 @@ class Twilio {
   }
 
   answerCall(sid) {
+    if (typeof sid !== "string") {
+      console.error("Invalid SID type:", typeof sid);
+      return;
+    }
     console.log("answerCall with sid", sid);
-    this.client.calls(sid).update({
-      url: "https://chirag-callcenter.loca.lt/connect-call",
-      method: "POST",
-      function(err, call) {
-        console.log("AnswerCall", call);
+    this.client.calls(sid).update(
+      {
+        url: "https://trady-callcenter.loca.lt/connect-call",
+        method: "POST",
+      },
+      (err, call) => {
         if (err) {
           console.error("answerCall", err);
+        } else {
+          console.log("AnswerCall", call);
         }
-      },
-    });
+      }
+    );
   }
 
   getAccessTokenForVoice = (identity) => {
