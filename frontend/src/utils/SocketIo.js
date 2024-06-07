@@ -1,7 +1,7 @@
 import io from "socket.io-client";
 
 class Socket {
-  url = "http://localhost:3001";
+  url = "http://localhost:3002";
   client = null;
   constructor() {
     this.client = io.connect(this.url);

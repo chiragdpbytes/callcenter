@@ -7,7 +7,6 @@ const socketIo = require("socket.io");
 const jwt = require("./utils/Jwt");
 
 const app = express();
-
 const server = http.createServer(app);
 const io = socketIo(server, {
   cors: {
@@ -47,6 +46,10 @@ io.on("connection", (socket) => {
   });
   socket.on("answer-call", (sid) => {
     console.log("Answering call with sid", sid);
+    if (typeof sid !== "string") {
+      console.error("Invalid SID type:", typeof sid);
+      return;
+    }
     twilio.answerCall(sid);
   });
 });
@@ -98,7 +101,11 @@ app.post("/verify", async (req, res) => {
 
 app.post("/call-new", (req, res) => {
   console.log("receive a new call");
-  io.emit("call-new", { data: req.body });
+  const callData = {
+    CallSid: req.body.CallSid,
+    CallStatus: req.body.CallStatus,
+  };
+  io.emit("call-new", { data: callData });
   const response = twilio.voiceResponse(
     "Thank you for call!! We will put you on hold until the next attendent is free."
   );
@@ -112,11 +119,13 @@ app.post("/call-status-changed", (req, res) => {
 });
 
 app.post("/enqueue", (req, res) => {
-  const response = twilio.enqueueCall("Customer Service");
   console.log("Enqueuing call");
-  io.emit("enqueue", { data: req.body });
+  const enqueueData = { CallSid: req.body.CallSid };
+  io.emit("enqueue", { data: enqueueData });
+  const response = twilio.enqueueCall("Customer Service");
   res.type("text/xml");
   res.send(response.toString());
+  console.log("response.toString() =>", response.toString());
 });
 
 app.post("/connect-call", (req, res) => {
@@ -126,7 +135,7 @@ app.post("/connect-call", (req, res) => {
   res.send(response.toString());
 });
 
-const PORT = 3001;
+const PORT = 3002;
 server.listen(PORT, () => {
   console.log(`Listning on PORT ${PORT}`);
 });

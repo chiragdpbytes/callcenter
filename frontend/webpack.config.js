@@ -23,7 +23,11 @@ module.exports = {
         test: /\.js$/,
         enforce: "pre",
         use: ["source-map-loader"],
-        exclude: [/node_modules\/@twilio\/audioplayer/],
+        // exclude: [/node_modules\/@twilio\/audioplayer/],
+        exclude: [
+          // Ensure the path is correctly formatted for Windows
+          path.resolve(__dirname, "node_modules/@twilio/audioplayer"),
+        ],
       },
       {
         test: /\.js$/,

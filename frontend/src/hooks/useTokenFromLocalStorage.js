@@ -5,7 +5,7 @@ import Axios from "../utils/Axios";
 function useTokenFromLocalStorage(initialValue) {
   const [value, setValue] = useLocalStorage("token", initialValue);
   const [isValid, setIsValid] = useState(false);
-  console.log("isValid =>", isValid);
+  // console.log("isValid =>", isValid);
   useEffect(() => {
     checkToken();
   }, [value]);

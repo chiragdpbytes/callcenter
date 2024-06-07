@@ -11,6 +11,8 @@ function App() {
   const [calls, setCalls] = useImmer({
     calls: [],
   });
+  console.log("App.js calls =>", calls);
+
   const [user, setUser] = useImmer({
     username: "",
     mobileNumber: "",
@@ -46,13 +48,22 @@ function App() {
       console.log("Socket disconnected");
     });
     socket.client.on("twilio-token", (data) => {
-      debugger;
       console.log("Receive Token from the backend");
       setTwilioToken(data.token);
     });
     socket.client.on("call-new", ({ data: { CallSid, CallStatus } }) => {
+      // debugger;
+      console.log(
+        "call-new-CallSid",
+        CallSid,
+        " ::::: call-new-CallStatus",
+        CallStatus
+      );
       setCalls((draft) => {
-        const index = draft.calls.findIndex((call) => call.CallSid === CallSid);
+        const index = draft.calls.findIndex(
+          (call) => call?.CallSid === CallSid
+        );
+        console.log("call-new index", index);
         if (index === -1) {
           draft.calls.push({ CallSid, CallStatus });
         }
@@ -60,10 +71,13 @@ function App() {
     });
 
     socket.client.on("enqueue", ({ data: { CallSid } }) => {
+      // debugger;
+      console.log("enqueue CallSid", CallSid);
       setCalls((draft) => {
         const index = draft.calls.findIndex(
-          ({ CallSid }) => CallSid === CallSid
+          (call) => call?.CallSid === CallSid
         );
+        console.log("enqueue index", index, "::: enqueue draft", draft);
         if (index === -1) {
           return;
         }
@@ -140,9 +154,13 @@ function App() {
           />
         </>
       )}
-      {/* {calls.calls.map((call, index) => (
-        <h1>{call.data.CallSid}</h1>
-      ))} */}
+      {calls.calls.map((call, index) =>
+        call && call.CallSid ? (
+          <h1 key={index}>{call.CallSid}</h1>
+        ) : (
+          <h1>null</h1>
+        )
+      )}
     </div>
   );
 }

@@ -1,10 +1,11 @@
 import React from "react";
 import { Container } from "semantic-ui-react";
-import socket from "socket.io-client";
+import socket from "../utils/SocketIo";
 
 function CallProgress({ call }) {
+  console.log("call =>", call);
   function answerCall(sid) {
-    socket.client.emit("answer-call", { sid });
+    socket.client.emit("answer-call", sid);
   }
   return (
     <Container>
@@ -16,7 +17,7 @@ function CallProgress({ call }) {
           <i class="phone icon"></i>
           <div class="content">
             <div class="title">Ringing</div>
-            <div class="description">{call.callSid}</div>
+            <div class="description">{call.CallSid}</div>
           </div>
         </div>
         <div
