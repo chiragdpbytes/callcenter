@@ -7,6 +7,7 @@ const socketIo = require("socket.io");
 const jwt = require("./utils/Jwt");
 
 const app = express();
+
 const server = http.createServer(app);
 const io = socketIo(server, {
   cors: {
